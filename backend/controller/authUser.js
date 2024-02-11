@@ -7,8 +7,15 @@ const bcrypt = require("bcrypt");
 //register user details
 const registerController = async (req, res) => {
   try {
-    const { name, location, dob, username, password, profilepicture, email } =
-      req.body;
+    const {
+      name,
+      location,
+      dob,
+      username,
+      password,
+      profilepicture = "",
+      email,
+    } = req.body;
 
     if (!name || !location || !dob || !username || !password || !email) {
       res.status(400).send({ message: "Please enter all details" });
@@ -35,8 +42,8 @@ const registerController = async (req, res) => {
       dob,
       profilepicture: profilepicture || "", // Use default value if not provided
     });
-
-    res.status(201).send({ message: "Successfully registered", result });
+    console.log(result);
+    res.status(200).send({ message: "Successfully registered", result });
   } catch (error) {
     res.status(500).send({ message: error.message });
   }

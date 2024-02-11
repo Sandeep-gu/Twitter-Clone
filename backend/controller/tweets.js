@@ -1,7 +1,8 @@
 const Tweet = require("../model/Tweet.js");
 const tweetsController = async (req, res) => {
   try {
-    const { content, image = "" } = req.body;
+    const { content, image } = req.body;
+    console.log(image);
     if (!content) {
       return res.status(404).send({ mesage: "Please Write Content" });
     }
@@ -15,6 +16,7 @@ const tweetsController = async (req, res) => {
     }
     res.status(200).send({ message: "successfully Submitted" });
   } catch (error) {
+    console.log(error);
     res.status(500).send({ message: error.message });
   }
 };
