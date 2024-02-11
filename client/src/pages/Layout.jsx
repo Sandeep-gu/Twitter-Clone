@@ -2,28 +2,29 @@ import React, { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 function Layout() {
-  const [menu, setMenu] = useState(false);
-  const navigate = useNavigate();
-  useEffect(() => {
-    let auth = localStorage.getItem("twitterclone");
+	const [menu, setMenu] = useState(false);
+	const navigate = useNavigate();
+	useEffect(() => {
+		let auth = localStorage.getItem("twitterclone");
 
-    console.log(JSON.parse(auth));
-    if (!auth) {
-      navigate("/login");
-    }
-  }, []);
-  return (
-    <div className="h-screen flex border-red-600 border-2">
-      <div className=" h-[100%] md:w-[20%] w-0 border-black border-1 bg-black text-white">
-        <Sidebar menu={menu} setMenu={setMenu} />
-      </div>
-      <div className="h-[100%] w-[100%] border-white-500 border-2 bg-slate-400 overflow-auto">
-        <Outlet />
-      </div>
-    </div>
-  );
+		console.log(JSON.parse(auth));
+		if (!auth) {
+			navigate("/login");
+		}
+	}, []);
+	return (
+		<div className="h-screen flex ">
+			<div className=" h-[100%] w-0 md:w-[40%] lg:w-[30%]  bg-black text-white">
+				<Sidebar />
+			</div>
+			<div className="h-[100%] w-full md:[60%] lg:w-[70%] border-white-500 border-2 bg-slate-400 overflow-auto">
+				<Outlet />
+			</div>
+		</div>
+	);
 }
 
 export default Layout;
