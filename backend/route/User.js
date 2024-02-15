@@ -4,6 +4,7 @@ const {
   followController,
   unfollowController,
   editUserDetailsController,
+  checkFollowUser,
 } = require("../controller/User.js");
 const express = require("express");
 const router = express.Router();
@@ -11,11 +12,14 @@ const router = express.Router();
 router.get("/single_user/:id", singleUserController);
 
 //follow use data
-router.get("/follow/:id", authUserMiddleware, followController);
+router.put("/follow/:id", authUserMiddleware, followController);
 
 //unfollow user
-router.get("/unfollow/:id", authUserMiddleware, unfollowController);
+router.put("/unfollow/:id", authUserMiddleware, unfollowController);
 
 //edit user details
-router.get("/edit-details", authUserMiddleware, editUserDetailsController);
+router.put("/edit-details", authUserMiddleware, editUserDetailsController);
+
+//user followed are not'
+router.get("/check-follow/:id", authUserMiddleware, checkFollowUser);
 module.exports = router;

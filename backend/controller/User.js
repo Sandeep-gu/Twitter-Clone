@@ -22,6 +22,7 @@ const singleUserController = async (req, res) => {
 const followController = async (req, res) => {
   try {
     const followId = req.params.id;
+
     const followUser = await User.findById(followId);
     const LoginUser = await User.findById(req.user.id);
 
@@ -45,12 +46,14 @@ const followController = async (req, res) => {
     followUser.followers.push(req.user.id);
 
     // Save both users
-    await LoginUser.save();
+    await LoginUser.save().select("-password", "_id");
     await followUser.save();
 
-    res
-      .status(200)
-      .json({ success: true, message: "Successfully followed the user" });
+    res.status(200).json({
+      success: true,
+      message: "Successfully followed the user",
+      LoginUser,
+    });
   } catch (error) {
     res.status(500).send({ message: error.message });
   }
@@ -94,7 +97,8 @@ const unfollowController = async (req, res) => {
 //edit user details
 const editUserDetailsController = async (req, res) => {
   try {
-    const { dob, location, name } = req.body;
+    console.log(req.body);
+    const { dob, location, name, image = "" } = req.body;
     if (!name || !dob || !location) {
       return res.status(400).json({
         success: false,
@@ -111,9 +115,10 @@ const editUserDetailsController = async (req, res) => {
     userData.name = name;
     userData.DOB = dob;
     userData.location = location;
+    userData.profilepicture = image;
 
     await userData.save();
-
+    console.log("userData", userData);
     res.status(200).json({
       success: true,
       message: "User details updated successfully",
@@ -123,9 +128,35 @@ const editUserDetailsController = async (req, res) => {
     res.status(500).send({ message: error.message });
   }
 };
+
+//check user folowed are not
+const checkFollowUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+
+    if (user) {
+      const isFollowing = user.following.includes(req.params.id);
+      // console.log(isFollowing);
+      if (!isFollowing) {
+        return res.status(200).send({ success: false, message: "Not found" });
+      }
+      return res
+        .status(200)
+        .send({ success: true, message: "successfully gate" });
+    } else {
+      return res
+        .status(200)
+        .send({ success: false, message: "User not found" });
+    }
+  } catch (error) {
+    res.status(500).send({ success: false, message: error.message });
+  }
+};
+
 module.exports = {
   singleUserController,
   followController,
   unfollowController,
   editUserDetailsController,
+  checkFollowUser,
 };

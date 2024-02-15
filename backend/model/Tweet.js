@@ -43,10 +43,8 @@ const tweetSchema = new mongoose.Schema(
     comments: [commentSchema], // Use the defined commentSchema for comments
     retweetBy: [
       {
-        user: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "User",
-        },
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
       },
     ],
     image: {

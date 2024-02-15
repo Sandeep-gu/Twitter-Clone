@@ -10,6 +10,8 @@ import Register from "./pages/Register";
 import Profile from "./components/routePage/Profile";
 import Layout from "./pages/Layout";
 import Home from "./components/routePage/Home";
+import FriendProfile from "./components/common/FriendProfile";
+import TweetPage from "./components/common/TweetPage";
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
           <Route path="/" element={<Navigate to="/Home" replace />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/friendprofile/:id" element=<FriendProfile /> />
+          <Route path="/tweetpage/:id" element={<TweetPage />} />
         </Route>
       </Routes>
     </Router>

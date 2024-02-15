@@ -4,11 +4,13 @@ import TweetBox from "../common/TweetBox";
 import axios from "../../redux/axiosConfig";
 function Home() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpenCom, setIsOpenCom] = useState(false);
   const [multipledata, setMultipleData] = useState([]);
+  const [isLike, setIsLike] = useState(false);
   //fetch all posts from the server
   useEffect(() => {
     handleMultipleTweets();
-  }, []);
+  }, [isOpen, isLike, isOpenCom]);
 
   const handleMultipleTweets = async () => {
     try {
@@ -37,7 +39,16 @@ function Home() {
       <div className="m-4">
         {multipledata &&
           multipledata.map((tweet) => {
-            return <PostItem key={tweet._id} tweet={tweet} />;
+            return (
+              <PostItem
+                key={tweet._id}
+                tweet={tweet}
+                isLike={isLike}
+                setIsLike={setIsLike}
+                isOpenCom={isOpenCom}
+                setIsOpenCom={setIsOpenCom}
+              />
+            );
           })}
       </div>
     </div>

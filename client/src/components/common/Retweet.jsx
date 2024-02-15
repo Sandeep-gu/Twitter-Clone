@@ -7,8 +7,7 @@ import { MdDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import CommentBox from "./CommentBox";
-import Retweet from "./Retweet";
-function PostItem({
+function Retweet({
   tweet,
   isLike,
   setIsLike,
@@ -115,8 +114,12 @@ function PostItem({
   }, [isLike]);
   return (
     <div className="w-full border border-gray-300 p-4 mb-4 rounded-md cursor-pointer">
+      {username ? (
+        <p className="ml-11 text-gray-500">Retweeted by @{username}</p>
+      ) : (
+        ""
+      )}
       <div className="flex items-start">
-        {username ? <p>Retweeted by {username}</p> : ""}
         <Link to={`/tweetpage/${tweet._id}`}>
           <img
             src="https://static.vecteezy.com/system/resources/previews/011/675/382/original/man-avatar-image-for-profile-png.png"
@@ -203,21 +206,8 @@ function PostItem({
           )}
         </div>
       </div>
-      {/* Display retweets */}
-      {tweet?.retweetBy?.length > 0 &&
-        tweet.retweetBy.map((retweetUser) => (
-          <Retweet
-            key={retweetUser._id}
-            tweet={tweet}
-            username={retweetUser.username}
-            isLike={isLike}
-            setIsLike={setIsLike}
-            isOpenCom={isOpenCom}
-            setIsOpenCom={setIsOpenCom}
-          />
-        ))}
     </div>
   );
 }
 
-export default PostItem;
+export default Retweet;

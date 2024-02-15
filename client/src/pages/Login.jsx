@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setToken } from "../redux/authSlice";
+import { setToken, setUserDetail } from "../redux/authSlice";
 const Login = () => {
   const [userDetails, setUserDetails] = useState({ email: "", password: "" });
   const navigate = useNavigate();
@@ -29,7 +29,8 @@ const Login = () => {
         console.log(data);
         console.log(data.data.token);
         dispatch(setToken(data.data.token));
-        localStorage.setItem("twitterclone", JSON.stringify(data.data));
+        dispatch(setUserDetail(data.data));
+        localStorage.setItem("twitterclone", JSON.stringify(data));
         toast.success(data.message);
         setTimeout(() => {
           navigate("/");

@@ -61,6 +61,7 @@ const loginController = async (req, res) => {
     if (!passwordMatch) {
       return res.status(401).send({ message: "Incorrect password" });
     }
+    console.log(user);
     const token = await idEncryption(user._id);
     const data = {
       name: user.name,
@@ -70,6 +71,9 @@ const loginController = async (req, res) => {
       dob: user.DOB,
       token,
       username: user.username,
+      createdAt: user.createdAt,
+      followers: user.followers,
+      following: user.following,
     };
     res.status(200).send({ message: "Login successful", data });
   } catch (error) {

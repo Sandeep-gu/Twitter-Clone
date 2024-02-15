@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Axios from "../../redux/axiosConfig";
 import axios from "axios";
 function TweetBox({ setIsOpen, isOpen }) {
@@ -67,6 +67,12 @@ function TweetBox({ setIsOpen, isOpen }) {
           className="bg-blue-500 text-white px-4 py-2 rounded-md"
         >
           Tweet
+        </button>
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="bg-blue-500 text-white px-4 py-2 rounded-md ml-2"
+        >
+          Back
         </button>
       </div>
     </div>
