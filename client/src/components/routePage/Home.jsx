@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import PostItem from "../common/PostItem";
 import TweetBox from "../common/TweetBox";
 import axios from "../../redux/axiosConfig";
+import { Audio } from "react-loader-spinner";
 function Home() {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenCom, setIsOpenCom] = useState(false);
   const [multipledata, setMultipleData] = useState([]);
+  const [loader, setLoader] = useState(false);
   const [isLike, setIsLike] = useState(false);
   //fetch all posts from the server
   useEffect(() => {
@@ -14,9 +16,11 @@ function Home() {
 
   const handleMultipleTweets = async () => {
     try {
+      setLoader(true);
       const { data } = await axios.get(
         "http://localhost:5000/api/tweet/multiple-tweets"
       );
+      setLoader(false);
       console.log(data.tweets);
       setMultipleData(data.tweets);
     } catch (error) {
@@ -37,7 +41,20 @@ function Home() {
         {isOpen && <TweetBox setIsOpen={setIsOpen} isOpen={isOpen} />}
       </div>
       <div className="m-4">
-        {multipledata &&
+        {loader ? (
+          <div className="h-screen flex justify-center items-center">
+            <Audio
+              height="80"
+              width="80"
+              radius="9"
+              color="green"
+              ariaLabel="loading"
+              wrapperStyle
+              wrapperClass
+            />
+          </div>
+        ) : (
+          multipledata &&
           multipledata.map((tweet) => {
             return (
               <PostItem
@@ -49,7 +66,8 @@ function Home() {
                 setIsOpenCom={setIsOpenCom}
               />
             );
-          })}
+          })
+        )}
       </div>
     </div>
   );

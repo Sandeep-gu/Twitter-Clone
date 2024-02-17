@@ -18,17 +18,17 @@ function Sidebar({ menu, setMenu }) {
   };
 
   return (
-    <div className="flex flex-col items-center justify-between md:w-[100%] bg-blue-500 h-full p-4 text-white">
-      <TiMessages className="md:text-[50px] text-3xl" />
+    <div className="flex flex-col active justify-between md:w-[100%] bg-blue-500 h-full p-4 text-white">
+      <TiMessages className="md:text-[50px] mr-autotext-3xl" />
 
-      <div className="flex flex-col items-center gap-4 mt-4">
-        <Link className="btn w-[90%] text-1xl" to="/home">
+      <div className="flex flex-col items-center hover:text-indigo-600 gap-4 mt-4">
+        <Link className="btn w-[100%] text-1xl" to="/home">
           Home
         </Link>
-        <Link className="btn w-[90%] text-1xl" to="/profile">
+        <Link className="btn w-[100%] text-1xl" to="/profile">
           Profile
         </Link>
-        <button className="btn w-[90%] text-1xl" onClick={handleLogout}>
+        <button className="btn w-[100%] text-1xl" onClick={handleLogout}>
           Logout
         </button>
       </div>
